@@ -1,0 +1,143 @@
+/*
+ * Copyright (c) 2022 Worldline Global Collect B.V
+ */
+
+package com.worldline.connect.sdk.client.android.model.paymentproduct;
+
+import com.worldline.connect.sdk.client.android.model.accountonfile.AccountOnFile;
+import com.worldline.connect.sdk.client.android.model.paymentitem.BasicPaymentItem;
+import com.worldline.connect.sdk.client.android.model.paymentitem.DisplayHintsPaymentItem;
+import com.worldline.connect.sdk.client.android.model.paymentproduct.specificdata.PaymentProduct302SpecificData;
+import com.worldline.connect.sdk.client.android.model.paymentproduct.specificdata.PaymentProduct320SpecificData;
+import com.worldline.connect.sdk.client.android.model.paymentproduct.specificdata.PaymentProduct863SpecificData;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * POJO which holds the BasicPaymentProduct properties.
+ */
+public class BasicPaymentProduct implements BasicPaymentItem, Serializable {
+
+	private static final long serialVersionUID = -8362704974696989741L;
+
+	private String id;
+	private String paymentMethod;
+	private String paymentProductGroup;
+	private Long minAmount;
+	private Long maxAmount;
+	private Boolean allowsRecurring;
+	private Boolean allowsTokenization;
+	private Boolean autoTokenized;
+	private Boolean usesRedirectionTo3rdParty;
+	private Boolean allowsInstallments;
+	private AuthenticationIndicator authenticationIndicator;
+	private Boolean supportsMandates;
+	private String acquirerCountry;
+	private Boolean deviceFingerprintEnabled;
+	private MobileIntegrationLevel mobileIntegrationLevel;
+	private DisplayHintsPaymentItem displayHints;
+
+	// List containing all AccountsOnFile
+	private List<AccountOnFile> accountsOnFile = new ArrayList<>();
+
+	// Payment product specific data
+	private PaymentProduct302SpecificData paymentProduct302SpecificData;
+	private PaymentProduct320SpecificData paymentProduct320SpecificData;
+	private PaymentProduct863SpecificData paymentProduct863SpecificData;
+
+	public String getId(){
+		return id;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public String getPaymentProductGroup() {
+		return paymentProductGroup;
+	}
+
+	public Boolean allowsRecurring() {
+		return allowsRecurring;
+	}
+
+	public Boolean allowsTokenization(){
+		return allowsTokenization;
+	}
+
+	public Boolean autoTokenized() {
+		return autoTokenized;
+	}
+
+	public Long getMinAmount(){
+		return minAmount;
+	}
+
+	public Long getMaxAmount(){
+		return maxAmount;
+	}
+
+	public Boolean usesRedirectionTo3rdParty(){
+		return usesRedirectionTo3rdParty;
+	}
+
+	public Boolean allowsInstallments() {
+		return allowsInstallments;
+	}
+
+	public AuthenticationIndicator getAuthenticationIndicator() {
+		return authenticationIndicator;
+	}
+
+	public Boolean supportsMandates() {
+		return supportsMandates;
+	}
+
+	public String getAcquirerCountry() {
+		return acquirerCountry;
+	}
+
+	public Boolean deviceFingerprintEnabled() {
+		return deviceFingerprintEnabled;
+	}
+
+	public MobileIntegrationLevel mobileIntegrationLevel(){
+		return mobileIntegrationLevel;
+	}
+
+	public List<AccountOnFile> getAccountsOnFile() {
+		return accountsOnFile;
+	}
+
+	public AccountOnFile getAccountOnFileById(String accountOnFileId) {
+
+		if (accountOnFileId == null) {
+			throw new IllegalArgumentException("Error getting AccountOnFile by id, accountOnFileId may not be null");
+		}
+
+		for (AccountOnFile accountOnFile : accountsOnFile) {
+			if (accountOnFile.getId().toString().equals(accountOnFileId)) {
+				return accountOnFile;
+			}
+		}
+		return null;
+	}
+
+	public DisplayHintsPaymentItem getDisplayHints(){
+		return displayHints;
+	}
+
+	public PaymentProduct302SpecificData getPaymentProduct302SpecificData() {
+		return paymentProduct302SpecificData;
+	}
+
+	public PaymentProduct320SpecificData getPaymentProduct320SpecificData() {
+		return paymentProduct320SpecificData;
+	}
+
+	public PaymentProduct863SpecificData getPaymentProduct863SpecificData() {
+		return paymentProduct863SpecificData;
+	}
+}

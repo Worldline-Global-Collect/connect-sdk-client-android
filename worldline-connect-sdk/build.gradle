@@ -1,0 +1,124 @@
+/*
+ * Copyright (c) 2022 Worldline Global Collect B.V
+ */
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'signing'
+    id 'maven-publish'
+    id 'org.sonarqube'
+}
+
+android {
+    namespace 'com.worldine.connect.sdk.client.android.sdk'
+
+    defaultConfig {
+        minSdkVersion 21
+        compileSdk 34
+        targetSdkVersion 34
+        versionCode 1
+        versionName "7.0.0"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+        lintConfig file('lint.xml')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.android.gms:play-services-wallet:19.3.0'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.9.0'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
+    testImplementation 'androidx.test:core:1.5.0'
+
+    // RX
+    implementation "io.reactivex.rxjava3:rxjava:3.1.8"
+    implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+
+    // Network
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.release
+
+                groupId = POM_GROUP_ID
+                artifactId = POM_ARTIFACT_ID
+                version = POM_VERSION
+                pom {
+                    name = POM_NAME
+                    description = POM_DESCRIPTION
+                    url = POM_URL
+
+                    organization {
+                        name = POM_ORGANIZATION_NAME
+                        url = POM_ORGANIZATION_URL
+                    }
+
+                    licenses {
+                        license {
+                            name = POM_LICENSE_NAME
+                            url = POM_LICENSE_URL
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            name = POM_DEVELOPER_NAME
+                            email = POM_DEVELOPER_EMAIL
+                            organization = POM_DEVELOPER_ORGANIZATION
+                            organizationUrl = POM_DEVELOPER_ORGANIZATIONURL
+                        }
+                    }
+
+                    issueManagement {
+                        system = POM_ISSUEMANAGEMENT_SYSTEM
+                        url = POM_ISSUEMANAGEMENT_URL
+                    }
+
+                    scm {
+                        connection = POM_SCM_CONNECTION
+                        developerConnection = POM_SCM_DEVELOPERCONNECTION
+                        url = POM_SCM_URL
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+}

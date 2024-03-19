@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="CheckResult">
+        <ignore path="src/main/java/com/worldline/connect/sdk/client/android/sdk/product/*" />
+        <ignore path="src/main/java/com/worldline/connect/sdk/client/android/sdk/productsgroup/*" />
+    </issue>
+</lint>
+
