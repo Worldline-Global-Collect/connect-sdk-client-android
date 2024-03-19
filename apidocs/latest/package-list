@@ -1,0 +1,40 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:com.worldline.connect.sdk.client.android.configuration/ConnectSDKConfiguration.Builder///PointingToDeclaration/com/worldline/connect/sdk/client/android/configuration/ConnectSDKConfiguration.Builder.html
+$dokka.location:com.worldline.connect.sdk.client.android.configuration/PaymentConfiguration.Builder///PointingToDeclaration/com/worldline/connect/sdk/client/android/configuration/PaymentConfiguration.Builder.html
+$dokka.location:com.worldline.connect.sdk.client.android.model.accountonfile.attributes/KeyValuePair.Status///PointingToDeclaration/com/worldline/connect/sdk/client/android/model/accountonfile/attributes/KeyValuePair.Status.html
+$dokka.location:com.worldline.connect.sdk.client.android.model.paymentproduct.field.displayhints/DisplayHintsProductFields.PreferredInputType///PointingToDeclaration/com/worldline/connect/sdk/client/android/model/paymentproduct/field/displayhints/DisplayHintsProductFields.PreferredInputType.html
+$dokka.location:com.worldline.connect.sdk.client.android.model.paymentproduct.field.displayhints/FormElement.ListType///PointingToDeclaration/com/worldline/connect/sdk/client/android/model/paymentproduct/field/displayhints/FormElement.ListType.html
+$dokka.location:com.worldline.connect.sdk.client.android.model.paymentproduct.field.displayhints/PaymentProductFieldDisplayElement.PaymentProductFieldDisplayElementType///PointingToDeclaration/com/worldline/connect/sdk/client/android/model/paymentproduct/field/displayhints/PaymentProductFieldDisplayElement.PaymentProductFieldDisplayElementType.html
+$dokka.location:com.worldline.connect.sdk.client.android.model.paymentproduct.field/PaymentProductField.Type///PointingToDeclaration/com/worldline/connect/sdk/client/android/model/paymentproduct/field/PaymentProductField.Type.html
+$dokka.location:com.worldline.connect.sdk.client.android.network/NetworkResponse.ApiError///PointingToDeclaration/com/worldline/connect/sdk/client/android/network/NetworkResponse.ApiError.html
+$dokka.location:com.worldline.connect.sdk.client.android.network/NetworkResponse.Success///PointingToDeclaration/com/worldline/connect/sdk/client/android/network/NetworkResponse.Success.html
+com.worldline.connect.sdk.client.android
+com.worldline.connect.sdk.client.android.configuration
+com.worldline.connect.sdk.client.android.constants
+com.worldline.connect.sdk.client.android.exception
+com.worldline.connect.sdk.client.android.formatter
+com.worldline.connect.sdk.client.android.googlepay
+com.worldline.connect.sdk.client.android.model.accountonfile
+com.worldline.connect.sdk.client.android.model.accountonfile.attributes
+com.worldline.connect.sdk.client.android.model.accountonfile.displayhints
+com.worldline.connect.sdk.client.android.model.convertamount
+com.worldline.connect.sdk.client.android.model.directoryentry
+com.worldline.connect.sdk.client.android.model.iindetails
+com.worldline.connect.sdk.client.android.model.paymentcontext
+com.worldline.connect.sdk.client.android.model.paymentitem
+com.worldline.connect.sdk.client.android.model.paymentproduct
+com.worldline.connect.sdk.client.android.model.paymentproduct.field
+com.worldline.connect.sdk.client.android.model.paymentproduct.field.displayhints
+com.worldline.connect.sdk.client.android.model.paymentproduct.specificdata
+com.worldline.connect.sdk.client.android.model.paymentproduct.validation
+com.worldline.connect.sdk.client.android.model.paymentproductgroup
+com.worldline.connect.sdk.client.android.model.paymentrequest
+com.worldline.connect.sdk.client.android.model.privacypolicy
+com.worldline.connect.sdk.client.android.model.publickey
+com.worldline.connect.sdk.client.android.model.thirdpartystatus
+com.worldline.connect.sdk.client.android.model.validation
+com.worldline.connect.sdk.client.android.network
+com.worldline.connect.sdk.client.android.network.apicalls.productsgroup
+com.worldline.connect.sdk.client.android.util
+
