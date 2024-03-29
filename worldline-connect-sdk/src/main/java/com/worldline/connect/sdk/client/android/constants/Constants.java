@@ -7,7 +7,7 @@ package com.worldline.connect.sdk.client.android.constants;
 public class Constants {
 
 	/** SDK version **/
-	public final static String SDK_IDENTIFIER = "AndroidClientSDK/v7.0.0";
+	public final static String SDK_IDENTIFIER = "AndroidClientSDK/v7.0.1";
 
 	/** SDK creator **/
 	public final static String SDK_CREATOR = "Worldline Global Collect";

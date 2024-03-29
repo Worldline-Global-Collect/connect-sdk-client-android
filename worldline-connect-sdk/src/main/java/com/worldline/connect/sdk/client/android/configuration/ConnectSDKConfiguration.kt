@@ -5,6 +5,7 @@
 package com.worldline.connect.sdk.client.android.configuration
 
 import android.content.Context
+import com.worldline.connect.sdk.client.android.constants.Constants
 
 class ConnectSDKConfiguration private constructor(
     val sessionConfiguration: SessionConfiguration,
@@ -12,7 +13,8 @@ class ConnectSDKConfiguration private constructor(
     val enableNetworkLogs: Boolean,
     val applicationId: String?,
     val ipAddress: String?,
-    val preLoadImages: Boolean
+    val preLoadImages: Boolean,
+    val sdkIdentifier: String
 ) {
 
     data class Builder(
@@ -21,10 +23,15 @@ class ConnectSDKConfiguration private constructor(
         var enableNetworkLogs: Boolean = false,
         var applicationId: String? = null,
         var ipAddress: String? = null,
-        var preLoadImages: Boolean = true
+        var preLoadImages: Boolean = true,
+        var sdkIdentifier: String = Constants.SDK_IDENTIFIER
     ) {
+        init {
+            sdkIdentifier = getValidSdkIdentifier(sdkIdentifier)
+        }
+
         constructor(sessionConfiguration: SessionConfiguration, applicationContext: Context) : this(
-            sessionConfiguration,applicationContext, false, null, null, true
+            sessionConfiguration,applicationContext, false, null, null, true, Constants.SDK_IDENTIFIER
         )
 
         fun enableNetworkLogs(enableNetworkLogs: Boolean) =
@@ -45,7 +52,24 @@ class ConnectSDKConfiguration private constructor(
             enableNetworkLogs,
             applicationId,
             ipAddress,
-            preLoadImages
+            preLoadImages,
+            sdkIdentifier
         )
+
+        private fun getValidSdkIdentifier(identifier: String): String {
+            val identifierParts = identifier.split("/")
+
+            if (identifierParts.size == 2
+                && identifierParts.first() == "FlutterClientSDK"
+                && identifierParts.last().startsWith("v")) {
+                val versionParts = identifierParts.last().replace("v", "").split(".")
+
+                if (versionParts.size == 3 && versionParts.all { it.toIntOrNull() != null }) {
+                    return identifier
+                }
+            }
+
+            return Constants.SDK_IDENTIFIER
+        }
     }
 }

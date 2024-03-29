@@ -29,11 +29,11 @@ internal object MetadataUtil {
 
     internal fun getBase64EncodedMetadata(configuration: ConnectSDKConfiguration) : String {
         val jsonMetadata = gson.toJson(
-            configuration.applicationContext.getMetadata(configuration.applicationId, configuration.ipAddress)
+            configuration.applicationContext.getMetadata(configuration.applicationId, configuration.ipAddress, configuration.sdkIdentifier)
         )
         return jsonMetadata.encodeToByteArray().base64UrlEncode()
     }
-    private fun Context.getMetadata(appIdentifier: String?, ipAddress: String?) : Map<String, String> {
+    private fun Context.getMetadata(appIdentifier: String?, ipAddress: String?, sdkIdentifier: String) : Map<String, String> {
         // appId is 'unknown' if appIdentifier is null or empty
         val appId = appIdentifier?.ifEmpty { null } ?: "unknown"
         val screenSize = getDefaultDisplayMetrics()
@@ -41,7 +41,7 @@ internal object MetadataUtil {
         val metaData = mutableMapOf<String, String>(
             metadataPlatformIdentifier to "Android/${Build.VERSION.RELEASE}",
             metadataAppIdentifier to appId,
-            metadataSDKIdentifier to Constants.SDK_IDENTIFIER,
+            metadataSDKIdentifier to sdkIdentifier,
             metadataSDKCreator to Constants.SDK_CREATOR,
             metadataScreenSize to "${screenSize.heightPixels}x${screenSize.widthPixels}",
             metadataDeviceBrand to Build.MANUFACTURER,
