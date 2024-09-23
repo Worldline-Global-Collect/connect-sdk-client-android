@@ -1,6 +1,8 @@
 complexity:
   TooManyFunctions:
     active: false
+  LongParameterList:
+    constructorThreshold: 8
 
 style:
   ReturnCount:

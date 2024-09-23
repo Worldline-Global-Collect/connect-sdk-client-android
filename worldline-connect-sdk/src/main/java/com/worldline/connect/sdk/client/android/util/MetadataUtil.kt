@@ -29,11 +29,19 @@ internal object MetadataUtil {
 
     internal fun getBase64EncodedMetadata(configuration: ConnectSDKConfiguration) : String {
         val jsonMetadata = gson.toJson(
-            configuration.applicationContext.getMetadata(configuration.applicationId, configuration.ipAddress, configuration.sdkIdentifier)
+            configuration.applicationContext.getMetadata(
+                configuration.applicationId,
+                configuration.ipAddress,
+                configuration.sdkIdentifier
+            )
         )
         return jsonMetadata.encodeToByteArray().base64UrlEncode()
     }
-    private fun Context.getMetadata(appIdentifier: String?, ipAddress: String?, sdkIdentifier: String) : Map<String, String> {
+    private fun Context.getMetadata(
+        appIdentifier: String?,
+        ipAddress: String?,
+        sdkIdentifier: String
+    ) : Map<String, String> {
         // appId is 'unknown' if appIdentifier is null or empty
         val appId = appIdentifier?.ifEmpty { null } ?: "unknown"
         val screenSize = getDefaultDisplayMetrics()

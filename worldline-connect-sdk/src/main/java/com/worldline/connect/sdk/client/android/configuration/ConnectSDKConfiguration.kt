@@ -59,17 +59,22 @@ class ConnectSDKConfiguration private constructor(
         private fun getValidSdkIdentifier(identifier: String): String {
             val identifierParts = identifier.split("/")
 
-            if (identifierParts.size == 2
+            if (identifierParts.size == IDENTIFIER_PARTS_SIZE
                 && identifierParts.first() == "FlutterClientSDK"
                 && identifierParts.last().startsWith("v")) {
                 val versionParts = identifierParts.last().replace("v", "").split(".")
 
-                if (versionParts.size == 3 && versionParts.all { it.toIntOrNull() != null }) {
+                if (versionParts.size == VERSION_PARTS_SIZE && versionParts.all { it.toIntOrNull() != null }) {
                     return identifier
                 }
             }
 
             return Constants.SDK_IDENTIFIER
+        }
+
+        private companion object {
+            const val IDENTIFIER_PARTS_SIZE = 2;
+            const val VERSION_PARTS_SIZE = 3;
         }
     }
 }

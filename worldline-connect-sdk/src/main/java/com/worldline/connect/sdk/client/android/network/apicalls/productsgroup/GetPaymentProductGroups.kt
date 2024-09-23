@@ -11,9 +11,12 @@ import com.worldline.connect.sdk.client.android.network.NetworkResponse
 import com.worldline.connect.sdk.client.android.network.UnknownNetworkResponseException
 import com.worldline.connect.sdk.client.android.model.paymentcontext.PaymentContext
 import com.worldline.connect.sdk.client.android.model.paymentproductgroup.BasicPaymentProductGroups
+import com.worldline.connect.sdk.client.android.network.apicalls.product.DrawableObserver
 import io.reactivex.rxjava3.core.Observable
 
 internal class GetPaymentProductGroups {
+
+    private val tag = "GetPaymentProductGroups"
 
     operator fun invoke(
         paymentContext: PaymentContext,
@@ -39,16 +42,15 @@ internal class GetPaymentProductGroups {
         ).flatMap { networkResponse ->
             if (networkResponse is NetworkResponse.Success) {
                 networkResponse.data?.basicPaymentProductGroups?.forEach { basicPaymentProductGroup ->
-                    GetDrawableFromUrl().invoke(
+                    GetDrawableFromUrl()(
                         connectSDKConfiguration,
                         basicPaymentProductGroup.displayHints.logoUrl
-                    ).subscribe ({
+                    ).subscribe(DrawableObserver({
                         basicPaymentProductGroup.displayHints.logo = it
-                    },{
+                    }) {
                         Log.w(
-                            "ConnectSDK",
-                            "Drawable for paymentProductGroup: ${basicPaymentProductGroup.id} can't be loaded",
-                            it
+                            tag,
+                            "Drawable for logo of paymentProductGroup: ${basicPaymentProductGroup.id} cannot be loaded"
                         )
                     })
                 }

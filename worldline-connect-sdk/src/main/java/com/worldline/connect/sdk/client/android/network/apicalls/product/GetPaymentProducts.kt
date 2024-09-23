@@ -4,6 +4,7 @@
 
 package com.worldline.connect.sdk.client.android.network.apicalls.product
 
+import android.util.Log
 import com.worldline.connect.sdk.client.android.configuration.ConnectSDKConfiguration
 import com.worldline.connect.sdk.client.android.network.drawable.GetDrawableFromUrl
 import com.worldline.connect.sdk.client.android.model.paymentcontext.PaymentContext
@@ -14,6 +15,8 @@ import com.worldline.connect.sdk.client.android.network.UnknownNetworkResponseEx
 import io.reactivex.rxjava3.core.Observable
 
 internal class GetPaymentProducts {
+
+    private val tag = "GetPaymentProducts"
 
     operator fun invoke(
         paymentContext: PaymentContext,
@@ -55,22 +58,24 @@ internal class GetPaymentProducts {
         paymentProducts: List<BasicPaymentProduct>,
         connectSDKConfiguration: ConnectSDKConfiguration,
     ): Observable<Unit> {
-        return Observable.create {
+        return Observable.create { observable ->
             var count = 0
             paymentProducts.forEach { basicPaymentProduct ->
                 if (!basicPaymentProduct.displayHints.logoUrl.isNullOrBlank()) {
-                    GetDrawableFromUrl().invoke(
+                    GetDrawableFromUrl()(
                         connectSDKConfiguration,
                         basicPaymentProduct.displayHints.logoUrl
                     ).doFinally {
                         count++
-                        if (count == paymentProducts.count()) it.onComplete()
-                    }.subscribe({ drawable ->
-                        basicPaymentProduct.displayHints.logo = drawable
-                    }, {})
+                        if (count == paymentProducts.count()) observable.onComplete()
+                    }.subscribe(DrawableObserver({
+                        basicPaymentProduct.displayHints.logo = it
+                    }) {
+                        Log.w(tag, "Drawable for logo of paymentProduct: ${basicPaymentProduct.id} cannot be loaded")
+                    })
                 } else {
                     count++
-                    if (count == paymentProducts.count()) it.onComplete()
+                    if (count == paymentProducts.count()) observable.onComplete()
                 }
             }
         }

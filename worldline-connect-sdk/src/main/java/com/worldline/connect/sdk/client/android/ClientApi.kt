@@ -251,6 +251,8 @@ class ClientApi(
                 { (onApiError::apiError)(it) },
                 { (onFailure::failure)(it) }
             )
+
+        compositeDisposable.add(disposable)
     }
 
     /**

@@ -4,6 +4,7 @@
 
 package com.worldline.connect.sdk.client.android.network.apicalls.product
 
+import android.util.Log
 import com.worldline.connect.sdk.client.android.configuration.ConnectSDKConfiguration
 import com.worldline.connect.sdk.client.android.network.drawable.GetDrawableFromUrl
 import com.worldline.connect.sdk.client.android.model.paymentcontext.PaymentContext
@@ -14,6 +15,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.Observables
 
 internal class GetPaymentProduct {
+
+    private val tag = "GetPaymentProduct"
 
     operator fun invoke(
         paymentContext: PaymentContext,
@@ -62,16 +65,20 @@ internal class GetPaymentProduct {
         paymentProduct: PaymentProduct,
         connectSDKConfiguration: ConnectSDKConfiguration,
     ): Observable<Unit> {
-        return Observable.create {
+        return Observable.create { observable ->
             if (!paymentProduct.displayHints.logoUrl.isNullOrBlank()) {
-                GetDrawableFromUrl().invoke(
+                GetDrawableFromUrl()(
                     connectSDKConfiguration,
                     paymentProduct.displayHints.logoUrl
-                ).subscribe({ drawable ->
-                    paymentProduct.displayHints.logo = drawable
-                    it.onComplete()
-                }, {})
-            } else it.onComplete()
+                ).doFinally {
+                    observable.onComplete()
+                }.subscribe(DrawableObserver({
+                    paymentProduct.displayHints.logo = it
+                }) {
+                    Log.w(tag, "Drawable for logo of paymentProduct: ${paymentProduct.id} cannot be loaded")
+                })
+
+            } else observable.onComplete()
         }
     }
 
@@ -79,28 +86,28 @@ internal class GetPaymentProduct {
         paymentProduct: PaymentProduct,
         connectSDKConfiguration: ConnectSDKConfiguration,
     ): Observable<Unit> {
-        return Observable.create {
+        return Observable.create { observable ->
             var count = 0
 
-            if(paymentProduct.paymentProductFields.isNullOrEmpty()) it.onComplete()
+            if(paymentProduct.paymentProductFields.isNullOrEmpty()) observable.onComplete()
 
             paymentProduct.paymentProductFields.forEach { paymentProductField ->
                 if (!paymentProductField.displayHints?.tooltip?.imageURL.isNullOrBlank()) {
-                    GetDrawableFromUrl().invoke(
+                    GetDrawableFromUrl()(
                         connectSDKConfiguration,
                         paymentProductField.displayHints.tooltip.imageURL
                     ).doFinally {
                         count++
-                        if (count == paymentProduct.paymentProductFields.count()) it.onComplete()
-                    }
-                        .subscribe({ drawable ->
-                            paymentProductField.displayHints.tooltip.imageDrawable = drawable },
-                            {}
-                        )
+                        if (count == paymentProduct.paymentProductFields.count()) observable.onComplete()
+                    }.subscribe(DrawableObserver({
+                        paymentProductField.displayHints.tooltip.imageDrawable = it
+                    }) {
+                        Log.w(tag, "Drawable for tooltip of paymentProduct: ${paymentProduct.id} cannot be loaded")
+                    })
                     return@forEach
                 }
                 count++
-                if (count == paymentProduct.paymentProductFields.count()) it.onComplete()
+                if (count == paymentProduct.paymentProductFields.count()) observable.onComplete()
             }
         }
     }
