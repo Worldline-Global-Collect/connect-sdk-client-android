@@ -23,18 +23,24 @@ public class PaymentContext implements Serializable {
     private boolean isRecurring;
     private Boolean forceBasicFlow;
     private Locale locale;
+    private boolean isInstallments;
 
     public PaymentContext() {}
 
     public PaymentContext(AmountOfMoney amountOfMoney, String countryCode, boolean isRecurring) {
-        this(amountOfMoney, countryCode, isRecurring, null);
+        this(amountOfMoney, countryCode, isRecurring, null, false);
     }
 
     public PaymentContext(AmountOfMoney amountOfMoney, String countryCode, boolean isRecurring, Locale locale) {
+        this(amountOfMoney, countryCode, isRecurring, locale, false);
+    }
+
+    public PaymentContext(AmountOfMoney amountOfMoney, String countryCode, boolean isRecurring, Locale locale, boolean isInstallments) {
         this.countryCode = countryCode;
         this.isRecurring = isRecurring;
         this.amountOfMoney = amountOfMoney;
         this.locale = locale;
+        this.isInstallments = isInstallments;
     }
 
     public AmountOfMoney getAmountOfMoney() {
@@ -76,6 +82,13 @@ public class PaymentContext implements Serializable {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    public boolean isInstallments() {
+        return isInstallments;
+    }
+    public void setIsInstallments(boolean isInstallments) {
+        this.isInstallments = isInstallments;
     }
 
     public Map<String, String> convertToNetworkRequestParameters() {
