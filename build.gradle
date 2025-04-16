@@ -6,13 +6,13 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.0'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
+        classpath libs.gradle
+        classpath libs.sonarqube.gradle.plugin
     }
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+    alias libs.plugins.jetbrains.kotlin.android apply false
 }
 
 tasks.register('clean', Delete) {

@@ -3,11 +3,11 @@
  */
 
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'signing'
-    id 'maven-publish'
-    id 'org.sonarqube'
+    alias libs.plugins.android.library
+    alias libs.plugins.jetbrains.kotlin.android
+    alias libs.plugins.signing
+    alias libs.plugins.maven.publish
+    alias libs.plugins.sonarqube
 }
 
 android {
@@ -15,10 +15,10 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        compileSdk 34
-        targetSdkVersion 34
+        compileSdk 35
+        targetSdkVersion 35
         versionCode 1
-        versionName "7.0.3"
+        versionName "7.0.4"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -51,27 +51,27 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-wallet:19.4.0'
+    implementation libs.play.services.wallet
     // The following dependency will be removed in the future, so its version can be ignored.
     //noinspection GradleDependency
-    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    implementation libs.commons.lang3
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.14.2'
-    testImplementation 'org.robolectric:robolectric:4.13'
-    testImplementation 'androidx.test:core:1.6.1'
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+    testImplementation libs.robolectric
+    testImplementation libs.test.core
 
     // RX
-    implementation "io.reactivex.rxjava3:rxjava:3.1.9"
-    implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation libs.rxjava
+    implementation libs.rxkotlin
+    implementation libs.rxandroid
 
     // Network
-    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.11.0'
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation libs.converter.gson
+    implementation libs.retrofit
+    implementation libs.logging.interceptor
+    implementation libs.adapter.rxjava3
+    implementation libs.gson
 }
 
 afterEvaluate {
